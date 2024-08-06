@@ -1,0 +1,28 @@
+* {
+  margin: 0px;
+  padding: 0px;
+  font-family: "Courier New", Courier, monospace;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin: 1rem;
+}
+
+table {
+  width: 40%;
+  margin: 1rem auto;
+  border-radius: 1rem;
+  padding: 0.5rem;
+
+  & #headTable {
+    background-color: #6cd2fe;
+    border-radius: 0.5rem;
+  }
+
+  & td {
+    height: 2rem;
+    margin: 1rem;
+    padding: 0.5rem;
+  }
+}
