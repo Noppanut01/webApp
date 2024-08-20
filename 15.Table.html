@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Table</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
     <div class="container">
         <!-- การสร้างตาราง -->
-        <table>
+        <table class="table">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -33,7 +38,7 @@
         </table>
         <br>
         <!-- Dark / Light -->
-        <table>
+        <table class="table table-dark">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -56,8 +61,8 @@
         </table>
         <br>
         <!-- กำหนดหัวตาราง -->
-        <table>
-            <thead>
+        <table class="table">
+            <thead class="table-danger">
                 <tr>
                     <th>ชื่อ</th>
                     <th>เบอร์โทร</th>
@@ -79,7 +84,7 @@
         </table>
         <br>
         <!-- Striped  -->
-        <table>
+        <table class="table table-striped">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -107,7 +112,7 @@
         </table>
         <br>
         <!-- Bordered -->
-        <table>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -130,7 +135,7 @@
         </table>
         <br>
         <!-- Borderless -->
-        <table>
+        <table class="table table-borderless">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -153,7 +158,7 @@
         </table>
         <br>
         <!-- Hover -->
-        <table>
+        <table class="table table-hover">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -176,7 +181,7 @@
         </table>
         <br>
         <!-- กำหนดสีของแถว -->
-        <table>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -185,12 +190,12 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr class="table-danger">
                     <td>ป้าพร</td>
                     <td>06x-xxx-xxx-x</td>
                     <td>กรุงเทพ</td>
                 </tr>
-                <tr>
+                <tr class="table-success">
                     <td>ลุงสมชาย</td>
                     <td>06x-xxx-xxx-x</td>
                     <td>เชียงใหม่</td>
@@ -199,7 +204,7 @@
         </table>
         <br>
         <!-- Small Table -->
-        <table>
+        <table class="table table-sm table-hover">
             <thead>
                 <tr>
                     <th>ชื่อ</th>
@@ -222,8 +227,8 @@
         </table>
         <br>
         <!-- Responsive Table  -->
-        <div>
-            <table>
+        <div class="table-respondsive">
+            <table class="table">
                 <thead>
                     <tr>
                         <th>ชื่อ</th>
@@ -247,4 +252,5 @@
         </div>
     </div>
 </body>
+
 </html>
