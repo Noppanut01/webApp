@@ -26,14 +26,16 @@ if (isset($_SESSION['id'])) {
         $_SESSION["username"] = "admin";
         $_SESSION["role"] = "a";
         $_SESSION["id"] = session_id();
-        echo "<p align='center'>ยินดีต้อนรับคุณ ADMIN</p>";
+        header('location: index.php');
     } elseif ($login == "member" && $password == "mem1234") {
         $_SESSION["username"] = "member";
         $_SESSION["role"] = "m";
         $_SESSION["id"] = session_id();
         echo "<p align='center'>ยินดีต้อนรับคุณ MEMBER</p>";
+        header('location: index.php');
     } else {
-        echo "<p align='center'>ชื่อบัญชีหรือรหัสผ่านไม่ถูกต้อง</p>";
+        $_SESSION["error"] = true;
+        header('location: login.php');
     }
     echo "<p align='center'><a href='index.php'>กลับไปยังหน้าหลัก</a></p>"
     ?>

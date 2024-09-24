@@ -25,6 +25,13 @@ if (isset($_SESSION['id'])) {
         <h1 align="center" class="my-3">Webboard Kakkak</h1>
         <?php
         include 'nav.php';
+        if (isset($_SESSION["error"]) && $_SESSION["error"]) {
+            echo "<div class='row d-flex justify-content-center'>";
+            echo "<div class='col-sm-8 col-md-6 col-lg-4'>";
+            echo "<div class='alert alert-danger' role='alert'>ชื่อหรือรหัสผ่านไม่ถูกต้อง</div>";
+            echo "</div>";
+            echo "</div>";
+        }
         ?>
 
         <div class="row d-flex justify-content-center">
