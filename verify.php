@@ -31,7 +31,6 @@ if (isset($_SESSION['id'])) {
         $_SESSION["username"] = "member";
         $_SESSION["role"] = "m";
         $_SESSION["id"] = session_id();
-        echo "<p align='center'>ยินดีต้อนรับคุณ MEMBER</p>";
         header('location: index.php');
     } else {
         $_SESSION["error"] = true;

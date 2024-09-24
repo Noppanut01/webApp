@@ -39,25 +39,16 @@ session_start();
             echo "<a href='newpost.php' class='btn btn-success btn-sm' style='float: right;'><i class='bi bi-plus-lg'></i> สร้างกระทู้ใหม่</a>";
         }
         ?>
-        <?php
-        // if (!isset($_SESSION['id'])) {
-        //     echo "<a style='float: right;' href='login.php'>เข้าสู่ระบบ</a>";
-        // } else {
-        //     echo "<span style='float: right;'>ผู้ใช้งานระบบ : $_SESSION[username] &nbsp <a href='logout.php'>ออกจากระบบ</a></span>";
-        //     echo "<p><a href='newpost.php'>สร้างกระทู้ใหม่</a></p>";
-        // }
-        ?>
-
         <table class="table table-striped my-3">
             <tbody>
                 <?php
                 if (isset($_SESSION['id']) && $_SESSION['role'] == 'a') {
                     for ($i = 1; $i <= 10; $i++) {
-                        echo "<tr><td><a href='post.php?id=$i' class='link-underline link-underline-opacity-0'>กระทู้ที่ $i</a><a href='delete.php?id=$i' class='btn btn-danger btn-sm' style='float: right;'></i><i class='bi bi-trash'></i></a></td></tr>";
+                        echo "<tr><td><a href='post.php?id=$i' class='link-dark link-underline link-underline-opacity-0'>กระทู้ที่ $i</a><a href='delete.php?id=$i' class='btn btn-danger btn-sm' style='float: right;'></i><i class='bi bi-trash'></i></a></td></tr>";
                     }
                 } else {
                     for ($i = 1; $i <= 10; $i++) {
-                        echo "<tr><td><a href='post.php?id=$i' class='link-underline link-underline-opacity-0'>กระทู้ที่ $i</a></td></tr>";
+                        echo "<tr><td><a href='post.php?id=$i' class='link-dark link-underline link-underline-opacity-0'>กระทู้ที่ $i</a></td></tr>";
                     }
                 }
                 ?>
