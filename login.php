@@ -39,7 +39,7 @@ if (isset($_SESSION['id'])) {
             <div class="col-sm-8 col-md-6 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        เข้าสู่ระบบ
+                        Login
                     </div>
                     <div class="card-body">
                         <form action="verify.php" method="post">
@@ -60,8 +60,6 @@ if (isset($_SESSION['id'])) {
                 </div>
             </div>
         </div>
-
-
         <p align="center" class="my-3">ถ้ายังไม่ได้เป็นสมาชิก <a href="register.php">กรุณาสมัครสมาชิก</a></p>
     </div>
 </body>
