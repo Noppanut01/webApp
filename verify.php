@@ -20,8 +20,6 @@ if (isset($_SESSION['id'])) {
     <?php
     $login = $_POST["login"];
     $password = $_POST["password"];
-    echo "<h1 align='center'>Webboard Kakkak</h1>";
-    echo "<hr>";
     if ($login == "admin" && $password == "ad1234") {
         $_SESSION["username"] = "admin";
         $_SESSION["role"] = "a";
@@ -36,7 +34,6 @@ if (isset($_SESSION['id'])) {
         $_SESSION["error"] = true;
         header('location: login.php');
     }
-    echo "<p align='center'><a href='index.php'>กลับไปยังหน้าหลัก</a></p>"
     ?>
 </body>
 

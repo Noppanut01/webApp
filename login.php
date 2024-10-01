@@ -29,6 +29,7 @@ if (isset($_SESSION['id'])) {
             echo "<div class='row d-flex justify-content-center'>";
             echo "<div class='col-sm-8 col-md-6 col-lg-4'>";
             echo "<div class='alert alert-danger' role='alert'>ชื่อหรือรหัสผ่านไม่ถูกต้อง</div>";
+            unset($_SESSION["error"]);
             echo "</div>";
             echo "</div>";
         }
@@ -52,7 +53,7 @@ if (isset($_SESSION['id'])) {
                             </div>
                             <div class="form-group d-flex justify-content-center mt-3">
                                 <input type="submit" value="Login" class="btn btn-success me-2">
-                                <input type="submit" value="Reset" class="btn btn-secondary ms-2">
+                                <input type="submit" value="Reset" class="btn btn-danger ms-2">
                             </div>
                         </form>
                     </div>
