@@ -27,6 +27,21 @@ if (isset($_SESSION['id'])) {
     <hr>
     <div class="row d-flex justify-content-center">
         <div class="col-sm-8 col-md-6 col-lg-4">
+            <?php
+            if (isset($_SESSION["add_login"])) {
+
+                if ($_SESSION["add_login"] == "error") {
+                    echo "<div class='alert alert-danger'>ชื่อบัญชีซ้ำหรือฐานข้อมูลมีปัญหา</div>";
+                } else {
+                    echo "<div class='alert alert-success'>เพิ่มบัญชีเรียบร้อย</div>";
+                }
+                unset($_SESSION["add_login"]);
+            }
+            ?>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-sm-8 col-md-6 col-lg-4">
             <div class="card">
                 <div class="card-header">
                     Register

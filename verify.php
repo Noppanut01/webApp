@@ -20,20 +20,23 @@ if (isset($_SESSION['id'])) {
     <?php
     $login = $_POST["login"];
     $password = $_POST["password"];
-    if ($login == "admin" && $password == "ad1234") {
-        $_SESSION["username"] = "admin";
-        $_SESSION["role"] = "a";
+    $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
+    $sql = "SELECT * FROM user WHERE login='$login' and password=sha1('$password')";
+    $result = $conn->query($sql);
+    if ($result->rowCount() == 1) {
+        $data =  $result->fetch(PDO::FETCH_ASSOC);
+        $_SESSION["username"] = $data["login"];
+        $_SESSION["role"] = $data["role"];
+        $_SESSION["user_id"] = $data["id"];
         $_SESSION["id"] = session_id();
-        header('location: index.php');
-    } elseif ($login == "member" && $password == "mem1234") {
-        $_SESSION["username"] = "member";
-        $_SESSION["role"] = "m";
-        $_SESSION["id"] = session_id();
-        header('location: index.php');
+        header("location:index.php");
+        die();
     } else {
         $_SESSION["error"] = true;
-        header('location: login.php');
+        header('location:login.php');
+        die();
     }
+    $conn = null;
     ?>
 </body>
 
