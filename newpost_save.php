@@ -9,19 +9,18 @@
 
 <body>
     <?php
-    $cat_id = $_POST['category'];
-    $topic = $_POST['topic'];
-    $content = $_POST['content'];
     session_start();
-    $user_id = $_SESSION['user_id'];
-
+    $title = $_POST["topic"];
+    $content = $_POST["content"];
+    $category = $_POST["category"];
+    $id = $_SESSION["user_id"];
     $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-    $sql = "INSERT INTO post (title, content, post_date, cat_id, user_id) 
-    VALUES('$topic', '$content', NOW() , '$cat_id', '$user_id')";
+    echo "connected";
+    $sql = "INSERT INTO post (title, content, post_date, cat_id, user_id) VALUES ( $title, $content,NOW(),$category, $id)";
     $conn->exec($sql);
+    echo "insert";
     $conn = null;
-    header("location:index.php");
-    die();
+    header("location:index.php")
     ?>
 </body>
 
