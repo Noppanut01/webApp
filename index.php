@@ -48,16 +48,29 @@ session_start();
         <table class="table table-striped my-3">
             <tbody>
                 <?php
+                $role = $_SESSION["role"];
                 $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
                 $sql = "SELECT t3.name, t1.title, t1.id,t2.login,t1.post_date FROM post as t1 INNER JOIN user as t2 on(t1.user_id=t2.id) INNER JOIN category  as t3 ON (t1.cat_id=t3.id) ORDER BY t1.post_date DESC";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch()) {
-                    echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a><br>$row[3] - $row[4]</td><tr>";
+                    if ($role == "m") {
+                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a><br>$row[3] - $row[4]</td></tr>";
+                    } else if ($role == "a") {
+                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a><a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><br>$row[3] - $row[4]</td></tr>";
+                    } else {
+                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a><br>$row[3] - $row[4]</td></tr>";
+                    }
                 }
                 $conn = null;
                 ?>
             </tbody>
         </table>
+        <script>
+            function confdelete() {
+                let a = confirm("ต้องการลบใช่หรือไม่");
+                return a;
+            }
+        </script>
     </div>
 </body>
 
