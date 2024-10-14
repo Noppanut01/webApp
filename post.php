@@ -19,6 +19,7 @@
     <div class="container">
         <?php
         session_start();
+        include 'nav.php';
         $num = $_GET['id'];
         $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
         $sql = "SELECT post.title, post.content, user.login, post.post_date FROM post INNER JOIN user ON (post.user_id=user.id) WHERE post.id=$num";
