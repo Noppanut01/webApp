@@ -31,6 +31,7 @@ if (!isset($_SESSION['id'])) {
     // echo "connected";
     ?>
     <div class="container">
+        <?php include "nav.php" ?>
         <div class="card">
             <div class="card-header">
                 ตั้งกระทู้ใหม่

@@ -24,63 +24,82 @@ if (isset($_SESSION['id'])) {
 
 <body>
     <h1 align="center">Register</h1>
-    <hr>
-    <div class="row d-flex justify-content-center">
-        <div class="col-sm-8 col-md-6 col-lg-4">
-            <?php
-            if (isset($_SESSION["add_login"])) {
+    <div class="container-lg">
+        <?php include 'nav.php'; ?>
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-4 col-md-6 col-lg-8">
+                <?php
+                if (isset($_SESSION["add_login"])) {
 
-                if ($_SESSION["add_login"] == "error") {
-                    echo "<div class='alert alert-danger'>ชื่อบัญชีซ้ำหรือฐานข้อมูลมีปัญหา</div>";
-                } else {
-                    echo "<div class='alert alert-success'>เพิ่มบัญชีเรียบร้อย</div>";
+                    if ($_SESSION["add_login"] == "error") {
+                        echo "<div class='alert alert-danger'>ชื่อบัญชีซ้ำหรือฐานข้อมูลมีปัญหา</div>";
+                    } else {
+                        echo "<div class='alert alert-success'>เพิ่มบัญชีเรียบร้อย</div>";
+                    }
+                    unset($_SESSION["add_login"]);
                 }
-                unset($_SESSION["add_login"]);
-            }
-            ?>
+                ?>
+            </div>
         </div>
-    </div>
-    <div class="row d-flex justify-content-center">
-        <div class="col-sm-8 col-md-6 col-lg-4">
-            <div class="card">
-                <div class="card-header">
-                    Register
-                </div>
-                <div class="card-body">
-                    <form action="register_save.php" method="post">
-                        <div class="form-group mb-3">
-                            <label for="login" class="form-label">Username: </label>
-                            <input class="form-control" type="text" name="login" id="login" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="password" class="form-label">Password: </label>
-                            <input class="form-control" type="password" name="password" id="password" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="name" class="form-label">Fullname: </label>
-                            <input class="form-control" type="text" name="name" id="name" required>
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="gender" class="form-label">Gender: </label>
-                            <input type="radio" name="gender" id="" value="m" required> Male <input type="radio"
-                                name="gender" id="" value="f"> Female <input type="radio" name="gender" id="" value="o">
-                            Other
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="email" class="form-label">Email: </label>
-                            <input class="form-control" type="email" name="email" id="email" required>
-                        </div>
-                        <div class="form-group d-flex justify-content-center mt-3">
-                            <button type="submit" class="btn btn-success me-2"><i class=' bi bi-pencil-square'></i>
-                                Register</button>
-                        </div>
-                    </form>
+        <div class="row d-flex justify-content-center">
+            <div class="col-sm-4 col-md-6 col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        Register
+                    </div>
+                    <div class="card-body">
+                        <form action="register_save.php" method="post">
+                            <div class="form-group mb-3">
+                                <label for="login" class="form-label">Username</label>
+                                <input class="form-control" type="text" name="login" id="login" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input class="form-control" type="password" name="password" id="password" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="conf-password" class="form-label">Confirm-password</label>
+                                <input class="form-control" type="password" name="conf-password" id="conf-password"
+                                    onblur="confp()" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="name" class="form-label">Fullname</label>
+                                <input class="form-control" type="text" name="name" id="name" required>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="gender" class="form-label">Gender</label>
+                                <input type="radio" name="gender" id="" value="m" required> Male <input type="radio"
+                                    name="gender" id="" value="f"> Female <input type="radio" name="gender" id=""
+                                    value="o">
+                                Other
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input class="form-control" type="email" name="email" id="email" required>
+                            </div>
+                            <div class="form-group d-flex justify-content-center mt-3">
+                                <button type="submit" class="btn btn-success me-2"><i class=' bi bi-pencil-square'></i>
+                                    Register</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
+        <br>
+        <div align="center"><a href="index.php">กลับไปหน้าหลัก</a></div>
     </div>
-    <br>
-    <p align="center"><a href="index.php">กลับไปหน้าหลัก</a></p>
+    <script>
+        function confp() {
+            let pwd = document.getElementById("password");
+            let cfpwd = document.getElementById("conf-password");
+            if (pwd.value !== cfpwd.value) {
+                alert("Password and Confirm-password doesn't the same");
+                pwd.value = "";
+                cfpwd.value = "";
+            }
+        }
+    </script>
 </body>
 
 </html>

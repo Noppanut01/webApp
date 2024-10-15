@@ -66,10 +66,9 @@ session_start();
             </tbody>
         </table>
         <script>
-            function confdelete() {
-                let a = confirm("ต้องการลบใช่หรือไม่");
-                return a;
-            }
+        function confdelete() {
+            return confirm("ต้องการลบใช่หรือไม่");
+        }
         </script>
     </div>
 </body>
