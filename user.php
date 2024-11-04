@@ -41,14 +41,14 @@ if ($_SESSION['role'] != 'a') {
             <div class="col-sm-12 col-md-12 col-lg-12 mx-auto">
                 <table class="table table-striped w-100">
                     <thead>
-                        <tr>
-                            <th scope="cols" class="text-start" style="width: 5%;">ลำดับ</th>
-                            <th scope="cols" class="text-center" style="width: 20%;">ชื่อผู้ใช้</th>
-                            <th scope="cols" class="text-center" style="width: 25%;">ชื่อ-นามสกุล</th>
-                            <th scope="cols" class="text-center" style="width: 5%;">เพศ</th>
-                            <th scope="cols" class="text-center" style="width: 25%;">อีเมล</th>
-                            <th scope="cols" class="text-center" style="width: 5%;">สิทธิ์</th>
-                            <th scope="cols" class="text-end" style="width: 15%;">จัดการ</th>
+                        <tr class="text-center">
+                            <th scope="cols">ลำดับ</th>
+                            <th scope="cols">ชื่อผู้ใช้</th>
+                            <th scope="cols">ชื่อ-นามสกุล</th>
+                            <th scope="cols">เพศ</th>
+                            <th scope="cols">อีเมล</th>
+                            <th scope="cols">สิทธิ์</th>
+                            <th scope="cols">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -59,14 +59,14 @@ if ($_SESSION['role'] != 'a') {
                         $i = 1;
                         while ($row = $result->fetch()) {
                             $rowData = json_encode($row);
-                            echo "<tr>
-                                        <td class='text-start'>$i</td>
-                                        <td class='text-center'>$row[1]</td>
-                                        <td class='text-center'>$row[2]</td>
-                                        <td class='text-center'>$row[3]</td>
-                                        <td class='text-center'>$row[4]</td>
-                                        <td class='text-center'>$row[5]</td>
-                                        <td class='text-end'>
+                            echo "<tr class='text-center'>
+                                        <td scope='row'>$i</td>
+                                        <td>$row[1]</td>
+                                        <td>$row[2]</td>
+                                        <td>$row[3]</td>
+                                        <td>$row[4]</td>
+                                        <td>$row[5]</td>
+                                        <td>
                                             <a class='btn btn-warning' role='button' data-bs-toggle='modal' data-bs-target='#editModal' data-value-raw='$rowData' onclick='setModalData(this)'>
                                                 <i class='bi bi-pencil-fill'></i>
                                             </a>

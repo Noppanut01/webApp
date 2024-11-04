@@ -57,10 +57,10 @@ if ($_SESSION['role'] != 'a') {
             <div class="col-sm-8 col-md-6 col-lg-5 mx-auto">
                 <table class="table table-striped">
                     <thead>
-                        <tr>
-                            <th scope="cols" class="text-start" style="width: 10%;">ลำดับ</th>
-                            <th scope="cols" class="text-center" style="width: 60%;">ชื่อหมวดหมู่</th>
-                            <th scope="cols" class="text-end" style="width: 30%;">จัดการ</th>
+                        <tr class="text-center">
+                            <th scope="cols">ลำดับ</th>
+                            <th scope="cols">ชื่อหมวดหมู่</th>
+                            <th scope="cols">จัดการ</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -70,10 +70,10 @@ if ($_SESSION['role'] != 'a') {
                         $result = $conn->query($sql);
                         $i = 1;
                         while ($row = $result->fetch()) {
-                            echo "<tr>
-                                    <td class='text-start'>$i</td>
-                                    <td class='text-center'>$row[1]</td>
-                                    <td class='text-end'>
+                            echo "<tr class=text-center>
+                                    <td scope='row'>$i</td>
+                                    <td>$row[1]</td>
+                                    <td>
                                         <a class='btn btn-warning' role='button' data-bs-toggle='modal' data-bs-target='#editModal' data-value-catID='$row[0]' data-value-name='$row[1]' onclick='setModalContent(this)'>
                                             <i class='bi bi-pencil-fill'></i>
                                         </a>

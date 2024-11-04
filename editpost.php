@@ -6,7 +6,7 @@ $sql = "SELECT id,title,content,cat_id,user_id FROM post where id =$id";
 $result = $conn->query($sql);
 $data = $result->fetch(PDO::FETCH_ASSOC);
 $conn = null;
-if (!isset($_SESSION['id']) || $data['user_id'] != $_SESSION['user_id']) {
+if (!isset($_SESSION['id']) || ($data['user_id'] != $_SESSION['user_id'])) {
     header("location:index.php");
 }
 ?>

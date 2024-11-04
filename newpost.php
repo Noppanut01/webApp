@@ -34,10 +34,10 @@ if (!isset($_SESSION['id'])) {
     <div class="container">
         <?php include "nav.php" ?>
         <div class="card">
-            <div class="card-header">
+            <div class="card-header bg-success text-white">
                 ตั้งกระทู้ใหม่
             </div>
-            <div class="card-body">
+            <div class="card-body border border-success">
                 <form action="newpost_save.php" method="post">
                     <div class="row mb-3">
                         <label class="col-lg-3 col-form-label">หมวดหมู่ :</label>
@@ -61,7 +61,7 @@ if (!isset($_SESSION['id'])) {
                     <div class=" row mb-3">
                         <label class="col-lg-3 col-form-label">เนื้อหา :</label>
                         <div class="col-lg-9">
-                            <textarea name="content" id="" required></textarea>
+                            <textarea class="border" name="content" rows="5" cols="75" id="" required></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">
