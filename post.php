@@ -19,6 +19,9 @@
     <div class="container">
         <?php
         session_start();
+        if (!isset($_SESSION["id"])) {
+            header("location:index.php");
+        }
         include 'nav.php';
         $num = $_GET['id'];
         $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
@@ -36,7 +39,7 @@
 
         $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
         $sql = "SELECT comment.content, user.login, comment.post_date FROM comment INNER JOIN user ON
-    (comment.user_id=user.id) WHERE comment.post_id=$num ORDER BY comment.post_date ASC";
+        (comment.user_id=user.id) WHERE comment.post_id=$num ORDER BY comment.post_date ASC";
         $result = $conn->query($sql);
         $i = 0;
         while ($row = $result->fetch()) {
@@ -46,7 +49,7 @@
         <div class='card-body'>
             $row[0] <br>$row[1]- $row[2]
         </div>
-    </div><br>";
+        </div><br>";
         }
         $conn = null;
         ?>

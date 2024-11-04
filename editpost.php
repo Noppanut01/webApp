@@ -1,7 +1,13 @@
 <?php
 session_start();
-if (!isset($_SESSION['id'])) {
-    header('location:index.php');
+$conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
+$id = $_GET['id'];
+$sql = "SELECT id,title,content,cat_id,user_id FROM post where id =$id";
+$result = $conn->query($sql);
+$data = $result->fetch(PDO::FETCH_ASSOC);
+$conn = null;
+if (!isset($_SESSION['id']) || $data['user_id'] != $_SESSION['user_id']) {
+    header("location:index.php");
 }
 ?>
 
@@ -23,27 +29,26 @@ if (!isset($_SESSION['id'])) {
 <body>
     <h1 align="center">Webboard KakKak</h1>
     <hr>
-    <?php
-    // $username = $_SESSION["username"];
-
-
-    $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-    $sql = "SELECT * FROM category";
-    // echo "connected";
-    ?>
     <div class="container">
-        <?php include "nav.php" ?>
+        <?php include "nav.php";
+        if (($_SESSION["editpost"])) {
+            echo "<div class='alert alert-success'>แก้ไขข้อมูลเรียบร้อยเเล้ว</div>";
+            unset($_SESSION["editpost"]);
+        } ?>
+
         <div class="card">
-            <div class="card-header">
-                ตั้งกระทู้ใหม่
+            <div class="card-header bg-warning border border-warning text-white">
+                แก้ไขกระทู้
             </div>
-            <div class="card-body">
-                <form action="newpost_save.php" method="post">
+            <div class="card-body border border-warning">
+                <form action="editpost_save.php" method="post">
                     <div class="row mb-3">
                         <label class="col-lg-3 col-form-label">หมวดหมู่ :</label>
                         <div class="col-lg-9">
                             <select name="category" class="form-select">
                                 <?php
+                                $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
+                                $sql = "SELECT * FROM category";
                                 foreach ($conn->query($sql) as $row) {
                                     echo "<option value=" . $row["id"] . ">" . $row["name"] . "</option>";
                                 }
@@ -53,6 +58,7 @@ if (!isset($_SESSION['id'])) {
                         </div>
                     </div>
                     <div class="row mb-3">
+                        <input type="hidden" name="post_id" value=<?php echo $id ?>>
                         <label class="col-lg-3 col-form-label">หัวข้อ :</label>
                         <div class="col-lg-9">
                             <input type="text" name="topic" id="" class="form-control" required>
@@ -61,12 +67,13 @@ if (!isset($_SESSION['id'])) {
                     <div class=" row mb-3">
                         <label class="col-lg-3 col-form-label">เนื้อหา :</label>
                         <div class="col-lg-9">
-                            <textarea name="content" id="" required></textarea>
+                            <textarea name="content" id="" rows="10" cols="75" class="border" required></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">
                         <div class="col-lg-12">
-                            <center> <button class="btn btn-success" type="submit"><i class="bi bi-pencil-square"></i>
+                            <center> <button class="btn btn-warning text-white" type="submit"><i
+                                        class="bi bi-pencil-square"></i>
                                     บันทึกข้อความ</button>
                             </center>
                         </div>

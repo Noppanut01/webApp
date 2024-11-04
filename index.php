@@ -23,22 +23,17 @@ session_start();
         <h1 align="center">Webboard Kakkak</h1>
         <?php include 'nav.php'; ?>
         <label for="">หมวดหมู่ :</label>
-        <span class="dropdown">
-            <button class="btn btn-light btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                --ทั้งหมด--
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="Button2">
-                <li><a class="dropdown-item" href="#">ทั้งหมด</a></li>
+        <span>
+            <select style="width: 15%;" name="category" class="form-select d-inline" onchange>
                 <?php
                 $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
                 $sql = "SELECT * FROM category";
                 foreach ($conn->query($sql) as $row) {
-                    echo "<li><a class=dropdown-item href=#>$row[name]</a></li>";
+                    echo "<option id='catID' onclick=getCatID() value=" . $row[0] . ">" . $row[1] . "</option>";
                 }
                 $conn = null;
                 ?>
-            </ul>
+            </select>
         </span>
         <?php
         if (isset($_SESSION["id"])) {
@@ -49,17 +44,22 @@ session_start();
             <tbody>
                 <?php
                 $role = $_SESSION["role"];
+                $username = $_SESSION["username"];
                 $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-                $sql = "SELECT t3.name, t1.title, t1.id,t2.login,t1.post_date FROM post as t1 INNER JOIN user as t2 on(t1.user_id=t2.id) INNER JOIN category  as t3 ON (t1.cat_id=t3.id) ORDER BY t1.post_date DESC";
+                $sql = "SELECT category.name, post.title, post.id,user.login,post.post_date FROM post INNER JOIN user on(post.user_id = user.id) INNER JOIN category ON (post.cat_id=category.id) ORDER BY post.post_date DESC";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch()) {
-                    if ($role == "m") {
-                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a><br>$row[3] - $row[4]</td></tr>";
-                    } else if ($role == "a") {
-                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a><a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><br>$row[3] - $row[4]</td></tr>";
-                    } else {
-                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a><br>$row[3] - $row[4]</td></tr>";
+                    echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a>";
+                    if (isset($_SESSION["id"]) && $username == $row[3] && $role == "m") {
+                        echo "<a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><a style='float:right'class='btn btn-warning bi bi-pencil-fill me-2' href='editpost.php?id=$row[2]'></a>";
+                    } else if (isset($_SESSION["id"]) && $role == "a") {
+                        if ($username == $row[3]) {
+                            echo "<a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><a style='float:right'class='btn btn-warning bi bi-pencil-fill me-2' href='editpost.php?id=$row[2]'></a>";
+                        } else {
+                            echo "<a style='float:right'class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a>";
+                        }
                     }
+                    echo "<br>$row[3] - $row[4]</td></tr>";
                 }
                 $conn = null;
                 ?>
@@ -68,6 +68,11 @@ session_start();
         <script>
         function confdelete() {
             return confirm("ต้องการลบใช่หรือไม่");
+        }
+
+        function getCatID() {
+            let catID = document.getElementById("catID").value
+            console.log(catID)
         }
         </script>
     </div>

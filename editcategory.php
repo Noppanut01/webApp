@@ -9,18 +9,17 @@
 
 <body>
     <?php
-    $cat_id = $_POST['category'];
-    $topic = $_POST['topic'];
-    $content = $_POST['content'];
     session_start();
-    $user_id = $_SESSION['user_id'];
+    $id = $_POST['cat_id'];
+    $name = $_POST['cat_name'];
+
     $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-    $sql = "INSERT INTO post (title, content, post_date, cat_id, user_id) 
-    VALUES('$topic', '$content', NOW() , '$cat_id', '$user_id')";
+    $sql = "UPDATE category Set name='$cat_name' Where id='$id'";
     $conn->exec($sql);
     $conn = null;
-    header("location:index.php");
-    die();
+
+    $_SESSION["cat_edit"] = true;
+    header("location: category.php");
     ?>
 </body>
 
