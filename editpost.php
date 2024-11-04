@@ -50,8 +50,13 @@ if (!isset($_SESSION['id']) || $data['user_id'] != $_SESSION['user_id']) {
                                 $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
                                 $sql = "SELECT * FROM category";
                                 foreach ($conn->query($sql) as $row) {
-                                    echo "<option value=" . $row["id"] . ">" . $row["name"] . "</option>";
+                                    if ($row[0] == $data['cat_id']) {
+                                        echo "<option value=" . $row[0] . " selected>" . $row[1] . "</option>";
+                                    } else {
+                                        echo "<option value=" . $row[0] . ">" . $row[1] . "</option>";
+                                    }
                                 }
+
                                 $conn = null;
                                 ?>
                             </select>
@@ -61,13 +66,15 @@ if (!isset($_SESSION['id']) || $data['user_id'] != $_SESSION['user_id']) {
                         <input type="hidden" name="post_id" value=<?php echo $id ?>>
                         <label class="col-lg-3 col-form-label">หัวข้อ :</label>
                         <div class="col-lg-9">
-                            <input type="text" name="topic" id="" class="form-control" required>
+                            <input type="text" name="topic" class=" form-control" value=<?php echo $data['title'] ?>
+                                required>
                         </div>
                     </div>
                     <div class=" row mb-3">
                         <label class="col-lg-3 col-form-label">เนื้อหา :</label>
                         <div class="col-lg-9">
-                            <textarea name="content" id="" rows="10" cols="75" class="border" required></textarea>
+                            <textarea name="content" class=" form-control" rows="8"
+                                required><?php echo $data['content'] ?></textarea>
                         </div>
                     </div>
                     <div class="row mb-3">

@@ -55,30 +55,34 @@
         ?>
         <!-- </div> -->
 
-        <div class="card text-dark bg-white border-success mx-auto" style="width: 60%;">
-            <div class="card-header bg-success text-white">เเสดงความคิดเห็น</div>
-            <div class="card-body">
-                <form action="post_save.php" method="post">
-                    <input type="hidden" name="post_id" value="<?= $_GET['id']; ?>">
-                    <div class="row mb-3 justify-content-center">
-                        <div class="col-lg-10">
-                            <textarea name="comment" class="form-control" rows="8"></textarea>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <center>
-                                <button type="submit" class="btn btn-success btn-sm text-white">
-                                    <i class="bi bi-box-arrow-up-right me-1"></i>ส่งข้อมูล
-                                </button>
-                            </center>
-                        </div>
-                    </div>
-                </form>
+        <?php
+        if ($_SESSION["role"] != "b") {
+            echo "<div class='card text-dark bg-white border-success mx-auto' style='width: 60%;'>
+                    <div class='card-header bg-success text-white'>เเสดงความคิดเห็น</div>
+                    <div class='card-body'>
+                        <form action='post_save.php' method='post'>
+                            <input type='hidden' name='post_id' value=$_GET[id]>
+        <div class='row mb-3 justify-content-center'>
+            <div class='col-lg-10'>
+                <textarea name='comment' class='form-control' rows='8'></textarea>
             </div>
         </div>
+        <div class='row'>
+            <div class='col-lg-12'>
+                <center>
+                    <button type='submit' class='btn btn-success btn-sm text-white'>
+                        <i class='bi bi-box-arrow-up-right me-1'></i>ส่งข้อมูล
+                    </button>
+                </center>
+            </div>
+        </div>
+        </form>
     </div>
-    <center><a href="index.php">กลับไปหน้าหลัก</a></center>
+    </div>
+    </div>";
+        }
+        ?>
+
 </body>
 
 </html>

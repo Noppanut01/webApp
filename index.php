@@ -1,5 +1,7 @@
 <?php
 session_start();
+setcookie("catName", isset($_COOKIE["catName"]) ? $_COOKIE["catName"] : "test", time() + (86400 * 30), "/");
+
 ?>
 
 <!DOCTYPE html>
@@ -19,24 +21,31 @@ session_start();
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
 <body>
-    <div class="container-lg">
+    <div class="container-lg mt-4 ms-auto me-auto">
         <h1 align="center">Webboard Kakkak</h1>
         <?php include 'nav.php'; ?>
-        <label for="">หมวดหมู่ :</label>
-        <span>
-            <select style="width: 15%;" name="category" class="form-select d-inline" onchange>
+        <span class="dropdown">
+            หมวดหมู่ :
+            <button id="catSelect" class="btn btn-light dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                <?php
+                echo isset($_COOKIE["catName"]) ? $_COOKIE["catName"] : "ทั้งหมด";
+                ?>
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="Button2">
+                <li><a onclick="selectCategory('ทั้งหมด')" class="dropdown-item">ทั้งหมด</a></li>
                 <?php
                 $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-                $sql = "SELECT * FROM category";
+                $sql = "SELECT name From category";
                 foreach ($conn->query($sql) as $row) {
-                    echo "<option id='catID' onclick=getCatID() value=" . $row[0] . ">" . $row[1] . "</option>";
+                    echo "<li><a onclick='selectCategory(\"$row[0]\")' class='dropdown-item'>$row[0]</a></li>";
                 }
                 $conn = null;
                 ?>
-            </select>
+            </ul>
         </span>
         <?php
-        if (isset($_SESSION["id"])) {
+        if (isset($_SESSION["id"]) && ($_SESSION["role"] != "b")) {
             echo "<a href='newpost.php' class='btn btn-success btn-sm' style='float: right;'><i class='bi bi-plus-lg'></i> สร้างกระทู้ใหม่</a>";
         }
         ?>
@@ -46,20 +55,34 @@ session_start();
                 $role = $_SESSION["role"];
                 $username = $_SESSION["username"];
                 $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-                $sql = "SELECT category.name, post.title, post.id,user.login,post.post_date FROM post INNER JOIN user on(post.user_id = user.id) INNER JOIN category ON (post.cat_id=category.id) ORDER BY post.post_date DESC";
+                $sql = "SELECT category.name, post.title, post.id,user.login,post.post_date FROM post INNER JOIN user on(post.user_id = user.id) INNER JOIN category ON (post.cat_id=category.id) WHERE user.role != 'b' ORDER BY post.post_date DESC";
                 $result = $conn->query($sql);
                 while ($row = $result->fetch()) {
-                    echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a>";
-                    if (isset($_SESSION["id"]) && $username == $row[3] && $role == "m") {
-                        echo "<a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><a style='float:right'class='btn btn-warning bi bi-pencil-fill me-2' href='editpost.php?id=$row[2]'></a>";
-                    } else if (isset($_SESSION["id"]) && $role == "a") {
-                        if ($username == $row[3]) {
+                    if ($_COOKIE["catName"] == "ทั้งหมด") {
+                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a>";
+                        if (isset($_SESSION["id"]) && $username == $row[3] && $role == "m") {
                             echo "<a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><a style='float:right'class='btn btn-warning bi bi-pencil-fill me-2' href='editpost.php?id=$row[2]'></a>";
-                        } else {
-                            echo "<a style='float:right'class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a>";
+                        } else if (isset($_SESSION["id"]) && $role == "a") {
+                            if ($username == $row[3]) {
+                                echo "<a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><a style='float:right'class='btn btn-warning bi bi-pencil-fill me-2' href='editpost.php?id=$row[2]'></a>";
+                            } else {
+                                echo "<a style='float:right'class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a>";
+                            }
                         }
+                        echo "<br>$row[3] - $row[4]</td></tr>";
+                    } else if ($row[0] == $_COOKIE["catName"]) {
+                        echo "<tr><td>[$row[0]]<a href=post.php?id=$row[2] style=text-decoration:none;> $row[1]</a>";
+                        if (isset($_SESSION["id"]) && $username == $row[3] && $role == "m") {
+                            echo "<a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><a style='float:right'class='btn btn-warning bi bi-pencil-fill me-2' href='editpost.php?id=$row[2]'></a>";
+                        } else if (isset($_SESSION["id"]) && $role == "a") {
+                            if ($username == $row[3]) {
+                                echo "<a class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a><a style='float:right'class='btn btn-warning bi bi-pencil-fill me-2' href='editpost.php?id=$row[2]'></a>";
+                            } else {
+                                echo "<a style='float:right'class='btn btn-danger' onclick='return confdelete()' href='delete.php?id=$row[2]' style='float:right'><i class='bi bi-trash-fill'></i></a>";
+                            }
+                        }
+                        echo "<br>$row[3] - $row[4]</td></tr>";
                     }
-                    echo "<br>$row[3] - $row[4]</td></tr>";
                 }
                 $conn = null;
                 ?>
@@ -70,10 +93,11 @@ session_start();
             return confirm("ต้องการลบใช่หรือไม่");
         }
 
-        function getCatID() {
-            let catID = document.getElementById("catID").value
-            console.log(catID)
-        }
+        function selectCategory(a) {
+            document.cookie = "catName=" + a + "; path=/; max-age=" + 1 * 24 * 60 *
+                60; // Expires in 1 days
+            location.reload();
+        };
         </script>
     </div>
 </body>

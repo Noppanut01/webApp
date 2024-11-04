@@ -25,10 +25,10 @@ if (isset($_SESSION['id'])) {
     $result = $conn->query($sql);
     if ($result->rowCount() == 1) {
         $data =  $result->fetch(PDO::FETCH_ASSOC);
-        $_SESSION["username"] = $data["login"];
-        $_SESSION["role"] = $data["role"];
-        $_SESSION["user_id"] = $data["id"];
-        $_SESSION["id"] = session_id();
+        $_SESSION['username'] = $data["login"];
+        $_SESSION['role'] = $data["role"];
+        $_SESSION['user_id'] = $data["id"];
+        $_SESSION['id'] = session_id();
         header("location:index.php");
         die();
     } else {

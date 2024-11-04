@@ -14,11 +14,16 @@
     $name = $_POST['cat_name'];
 
     $conn = new PDO("mysql:host=localhost;dbname=webboard;charset=utf8", "root", "");
-    $sql = "UPDATE category Set name='$cat_name' Where id='$id'";
-    $conn->exec($sql);
+    $sql = "SELECT name From category WHERE name = '$name'";
+    $count = $conn->query($sql)->fetchColumn();
+    if ($count == 0) {
+        $sql = "UPDATE category Set name='$name' Where id='$id'";
+        $conn->exec($sql);
+        $_SESSION["cat_edit"] = true;
+    } else {
+        $_SESSION["cat_edit"] = false;
+    }
     $conn = null;
-
-    $_SESSION["cat_edit"] = true;
     header("location: category.php");
     ?>
 </body>
